@@ -3,7 +3,6 @@ use std::io::Cursor;
 use quad_snd::*;
 use quad_snd::mixer::SoundMixer;
 use wav::BitDepth;
-use std::alloc::handle_alloc_error;
 
 const MUSIC_RES: &[u8] = include_bytes!("MUSIC.RES");
 
@@ -11,7 +10,7 @@ fn main() {
     let cursor = Cursor::new(MUSIC_RES);
     if let Ok(resource_file) = ResourceFile::new(cursor) {
         let mut resource_file = resource_file;
-        if let Ok(bytes) = resource_file.get_resource_bytes("b07.wav") {
+        if let Ok(bytes) = resource_file.get_resource_bytes("b10.wav") {
             let (header, old_track) = wav::read(&mut(&bytes[..])).unwrap();
 
             let track = match old_track {
@@ -47,7 +46,7 @@ fn main() {
 
             let mut reprocessed_audio: Vec<u8> = Vec::new();
 
-            wav::write(header, track, &mut reprocessed_audio);
+            wav::write(header, track, &mut reprocessed_audio).unwrap();
             let decoded_wav = decoder::read_wav(&reprocessed_audio[..]).unwrap();
             let mut mixer = SoundMixer::new();
             mixer.play(decoded_wav);
