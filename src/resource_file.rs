@@ -3,7 +3,6 @@ use std::{
     io::{Read, Seek, SeekFrom},
     rc::Rc
 };
-use crate::cp866;
 
 pub enum RomResourceError {
     UnableToRead,
@@ -78,17 +77,7 @@ impl<T: Read+Seek> ResourceFile<T> {
         if stream.read(&mut name_bytes).is_err() {
             return Err(RomResourceError::UnableToRead)
         };
-        let mut name_length = 0;
-        loop {
-            if name_bytes[name_length] == 0 {
-                break;
-            }
-            name_length += 1;
-        }
-        let mut name = String::with_capacity(name_length);
-        for i in 0..name_length {
-            name.push(cp866::decode_char(name_bytes[i]))
-        }
+        let name = cp866_rs::decode_bytes(&name_bytes);
         return Ok(
             ResourceHeader {
                 offset,
