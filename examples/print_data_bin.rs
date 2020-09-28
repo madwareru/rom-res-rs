@@ -1,7 +1,7 @@
 use rom_res_rs::*;
 use std::io::Cursor;
 
-const GRAPHICS_RES: &[u8] = include_bytes!("GRAPHICS.RES");
+const WORLD_RES: &[u8] = include_bytes!("WORLD.RES");
 const HEX_CHARS: &[char] = &[
     '0','1','2','3',
     '4','5','6','7',
@@ -71,11 +71,11 @@ fn print_cp866_chunk(chunk: &[u8]) {
 }
 
 fn main() {
-    let cursor = Cursor::new(GRAPHICS_RES);
+    let cursor = Cursor::new(WORLD_RES);
     if let Ok(resource_file) = ResourceFile::new(cursor) {
         let mut resource_file = resource_file;
-        if let Ok(reg_file) = resource_file.get_resource_bytes("units/units.reg"){
-            let mut bytes = reg_file;
+        if let Ok(data_bin) = resource_file.get_resource_bytes("data/data.bin"){
+            let mut bytes = data_bin;
             let mut offset = 0 as usize;
             while bytes.len() > 0 {
                 let chunk = if bytes.len() >= CHUNK_SIZE{
