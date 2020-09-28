@@ -8,3 +8,7 @@ edition = "2018"
 
 [dependencies]
 cp866-rs = { git = "https://github.com/madwareru/cp866-rs", version = "0.1.2"}
+
+[dev-dependencies]
+quad-snd = { git = "https://github.com/not-fl3/quad-snd", version = "0.1.0"}
+wav = "0.4.0"
