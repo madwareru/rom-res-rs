@@ -10,12 +10,12 @@ fn main() {
     let cursor = Cursor::new(MUSIC_RES);
     if let Ok(resource_file) = ResourceFile::new(cursor) {
         let mut resource_file = resource_file;
-        if let Ok(bytes) = resource_file.get_resource_bytes("b10.wav") {
+        if let Ok(bytes) = resource_file.get_resource_bytes("menu.wav") {
             let (header, old_track) = wav::read(&mut(&bytes[..])).unwrap();
 
             let track = match old_track {
                 BitDepth::Eight(d) => {
-                    let mut new_vec = Vec::new();
+                    let mut new_vec = Vec::with_capacity(d.len() * 2);
                     for u_8 in d {
                         new_vec.push(u_8);
                         new_vec.push(u_8);
@@ -23,15 +23,15 @@ fn main() {
                     BitDepth::Eight(new_vec)
                 },
                 BitDepth::Sixteen(d) => {
-                    let mut new_vec = Vec::new();
-                    for i_16 in d {
+                    let mut new_vec = Vec::with_capacity(d.len() * 2);
+                    for &i_16 in d.iter() {
                         new_vec.push(i_16);
                         new_vec.push(i_16);
                     }
                     BitDepth::Sixteen(new_vec)
                 },
                 BitDepth::TwentyFour(d) => {
-                    let mut new_vec = Vec::new();
+                    let mut new_vec = Vec::with_capacity(d.len() * 2);
                     for i_32 in d {
                         new_vec.push(i_32);
                         new_vec.push(i_32);
