@@ -11,14 +11,27 @@ const SPEECH_RES: &[u8] = include_bytes!("SPEECH.RES");
 
 fn reprocess_wav(bytes: &[u8]) -> Vec<u8> {
     let mut wav_file = WavContent::read(&mut Cursor::new(bytes)).unwrap();
-    let correction_deeded = wav_file.fmt.sampling_rate == 22050;
+    let correction_needed = wav_file.fmt.sampling_rate == 22050;
     let mut reprocessed_audio: Vec<u8> = Vec::new();
 
-    if correction_deeded {
+    if correction_needed {
         let mut new_vec = Vec::with_capacity(wav_file.data.len() * 2);
-        for &sample in wav_file.data.iter() {
-            new_vec.push(sample);
-            new_vec.push(sample);
+        let mut offset = 0;
+        while offset < wav_file.data.len() {
+            if wav_file.fmt.channels == 1 {
+                let sample = wav_file.data[offset];
+                offset += 1;
+                new_vec.push(sample);
+                new_vec.push(sample);
+            } else {
+                let sample0 = wav_file.data[offset];
+                let sample1 = wav_file.data[offset + 1];
+                offset += 2;
+                new_vec.push(sample0);
+                new_vec.push(sample1);
+                new_vec.push(sample0);
+                new_vec.push(sample1);
+            }
         }
         wav_file.fmt.sampling_rate *= 2;
         wav_file.fmt.data_rate *= 2;
