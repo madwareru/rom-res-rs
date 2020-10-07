@@ -390,8 +390,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "quad-snd"
-version = "0.1.2"
-source = "git+https://github.com/madwareru/quad-snd?branch=fix_incorrect_sample_rate#d1f3a39b880a6a528e654bafae8ce3c05f124623"
+version = "0.1.1"
+source = "git+https://github.com/madwareru/quad-snd?branch=feature/sample-rate-correction#8a64571e0ffd3c6174ef3c7dffc6805f29ed61d9"
 dependencies = [
  "cpal 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hound 3.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -439,7 +439,7 @@ dependencies = [
  "bin-serialization-rs 0.1.3 (git+https://github.com/madwareru/bin-serialization-rs)",
  "cp866-rs 0.1.2 (git+https://github.com/madwareru/cp866-rs)",
  "macroquad 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
- "quad-snd 0.1.2 (git+https://github.com/madwareru/quad-snd?branch=fix_incorrect_sample_rate)",
+ "quad-snd 0.1.1 (git+https://github.com/madwareru/quad-snd?branch=feature/sample-rate-correction)",
  "regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "rom-loaders-rs 0.1.9 (git+https://github.com/madwareru/rom-loaders-rs)",
 ]
@@ -653,7 +653,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum proc-macro2 1.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "51ef7cd2518ead700af67bf9d1a658d90b6037d77110fd9c0445429d0ba1c6c9"
 "checksum quad-gl 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a6a9c34f7e344c68903c30f92fda630a881f88ab5d7b8fd64a6b794ee62ffbf5"
 "checksum quad-rand 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ec3e8eb9b1d9b58a43bac8f20985768ddcc03b928a909d4d39ced327b971fec5"
-"checksum quad-snd 0.1.2 (git+https://github.com/madwareru/quad-snd?branch=fix_incorrect_sample_rate)" = "<none>"
+"checksum quad-snd 0.1.1 (git+https://github.com/madwareru/quad-snd?branch=feature/sample-rate-correction)" = "<none>"
 "checksum quote 1.0.7 (registry+https://github.com/rust-lang/crates.io-index)" = "aa563d17ecb180e500da1cfd2b028310ac758de548efdd203e18f283af693f37"
 "checksum regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)" = "9c3780fcf44b193bc4d09f36d2a3c87b251da4a046c87795a0d35f4f927ad8e6"
 "checksum regex-syntax 0.6.18 (registry+https://github.com/rust-lang/crates.io-index)" = "26412eb97c6b088a6997e05f69403a802a92d520de2f8e63c2b65f9e0f47c4e8"

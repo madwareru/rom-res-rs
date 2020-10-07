@@ -4,43 +4,11 @@ use quad_snd::{mixer::{SoundMixer, PlaybackStyle}, decoder};
 use std::io::Cursor;
 use rom_res_rs::ResourceFile;
 use rom_loaders_rs::multimedia::WavContent;
+use std::iter::FromIterator;
 
 const MUSIC_RES: &[u8] = include_bytes!("MUSIC.RES");
 const SFX_RES: &[u8] = include_bytes!("SFX.RES");
 const SPEECH_RES: &[u8] = include_bytes!("SPEECH.RES");
-
-fn reprocess_wav(bytes: &[u8]) -> Vec<u8> {
-    let mut wav_file = WavContent::read(&mut Cursor::new(bytes)).unwrap();
-    let correction_needed = wav_file.fmt.sampling_rate == 22050;
-    let mut reprocessed_audio: Vec<u8> = Vec::new();
-
-    if correction_needed {
-        let mut new_vec = Vec::with_capacity(wav_file.data.len() * 2);
-        let mut offset = 0;
-        while offset < wav_file.data.len() {
-            if wav_file.fmt.channels == 1 {
-                let sample = wav_file.data[offset];
-                offset += 1;
-                new_vec.push(sample);
-                new_vec.push(sample);
-            } else {
-                let sample0 = wav_file.data[offset];
-                let sample1 = wav_file.data[offset + 1];
-                offset += 2;
-                new_vec.push(sample0);
-                new_vec.push(sample1);
-                new_vec.push(sample0);
-                new_vec.push(sample1);
-            }
-        }
-        wav_file.fmt.sampling_rate *= 2;
-        wav_file.fmt.data_rate *= 2;
-        wav_file.data = new_vec;
-    }
-
-    wav_file.write(&mut reprocessed_audio).unwrap();
-    reprocessed_audio
-}
 
 #[macroquad::main("Play ROM sounds")]
 async fn main() {
@@ -100,9 +68,8 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = music_resource_file.get_resource_bytes(&music_resources[i]) {
-                                let reprocessed_audio = reprocess_wav(bytes);
                                 let decoded_wav = decoder::read_wav_ext(
-                                    &reprocessed_audio[..],
+                                    bytes,
                                     PlaybackStyle::Looped,
                                 ).unwrap();
 
@@ -134,10 +101,8 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = sfx_resource_file.get_resource_bytes(&sfx_resources[i]) {
-                                let reprocessed_audio = reprocess_wav(bytes);
-
                                 let decoded_wav = decoder::read_wav(
-                                    &reprocessed_audio[..]
+                                    bytes
                                 ).unwrap();
 
                                 sfx_mixer.play(decoded_wav);
@@ -165,10 +130,8 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = speech_resource_file.get_resource_bytes(&speech_resources[i]) {
-                                let reprocessed_audio = reprocess_wav(bytes);
-
                                 let decoded_wav = decoder::read_wav(
-                                    &reprocessed_audio[..]
+                                    bytes
                                 ).unwrap();
 
                                 sfx_mixer.play(decoded_wav);
