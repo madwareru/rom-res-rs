@@ -1,10 +1,9 @@
 use macroquad::{clear_background, draw_window, megaui::{widgets, Vector2}, Vec2, WHITE, WindowParams};
 
-use quad_snd::{mixer::{SoundMixer, PlaybackStyle}, decoder};
 use std::io::Cursor;
 use rom_res_rs::ResourceFile;
-use rom_loaders_rs::multimedia::WavContent;
-use std::iter::FromIterator;
+use rom_media_rs::audio::{SoundMixer, Sound, PlaybackBuilder};
+use rom_media_rs::audio::mixer::PlaybackStyle;
 
 const MUSIC_RES: &[u8] = include_bytes!("MUSIC.RES");
 const SFX_RES: &[u8] = include_bytes!("SFX.RES");
@@ -12,19 +11,14 @@ const SPEECH_RES: &[u8] = include_bytes!("SPEECH.RES");
 
 #[macroquad::main("Play ROM sounds")]
 async fn main() {
-    let (music_cursor, sfx_cursor, speech_cursor) = (
-        Cursor::new(MUSIC_RES),
-        Cursor::new(SFX_RES),
-        Cursor::new(SPEECH_RES)
-    );
     if let (
         Ok(music_resource_file),
         Ok(sfx_resource_file),
         Ok(speech_resource_file)
     ) = (
-        ResourceFile::new(music_cursor),
-        ResourceFile::new(sfx_cursor),
-        ResourceFile::new(speech_cursor)
+        ResourceFile::new(Cursor::new(MUSIC_RES)),
+        ResourceFile::new(Cursor::new(SFX_RES)),
+        ResourceFile::new(Cursor::new(SPEECH_RES))
     ) {
         let mut music_resource_file = music_resource_file;
         let mut sfx_resource_file = sfx_resource_file;
@@ -68,16 +62,20 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = music_resource_file.get_resource_bytes(&music_resources[i]) {
-                                let decoded_wav = decoder::read_wav_ext(
+                                let decoded_wav = Sound::from_bytes_ext(
                                     bytes,
-                                    PlaybackStyle::Looped,
-                                ).unwrap();
+                                    PlaybackStyle::Looped
+                                ) .unwrap();
 
                                 if let Some(id) = music_sound_id {
                                     music_mixer.stop(id);
                                 }
 
-                                music_sound_id = Some(music_mixer.play(decoded_wav));
+                                music_sound_id =
+                                    music_mixer.play(
+                                        PlaybackBuilder::new()
+                                        .with_sound(decoded_wav)
+                                    );
                             }
                         }
                         y_pos += 30.;
@@ -101,11 +99,14 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = sfx_resource_file.get_resource_bytes(&sfx_resources[i]) {
-                                let decoded_wav = decoder::read_wav(
+                                let decoded_wav = Sound::from_bytes(
                                     bytes
                                 ).unwrap();
 
-                                sfx_mixer.play(decoded_wav);
+                                sfx_mixer.play(
+                                    PlaybackBuilder::new()
+                                        .with_sound(decoded_wav)
+                                ).unwrap();
                             }
                         }
                         y_pos += 30.;
@@ -130,11 +131,14 @@ async fn main() {
                             .ui(ui)
                         {
                             if let Ok(bytes) = speech_resource_file.get_resource_bytes(&speech_resources[i]) {
-                                let decoded_wav = decoder::read_wav(
+                                let decoded_wav = Sound::from_bytes(
                                     bytes
                                 ).unwrap();
 
-                                sfx_mixer.play(decoded_wav);
+                                sfx_mixer.play(
+                                    PlaybackBuilder::new()
+                                        .with_sound(decoded_wav)
+                                ).unwrap();
                             }
                         }
                         y_pos += 30.;
