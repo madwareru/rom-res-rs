@@ -1,11 +1,11 @@
 use rom_res_rs::*;
 use std::io::{Cursor, Write};
 use minifb::{Window, WindowOptions, Key};
-use rom_media_rs::video::{SmackerPlayer, PlayerState};
+use rom_media_rs::video::{SmackerPlayer, PlayerState, FadeInState, RenderingFramesState};
 use std::time::Instant;
 
 const VIDEO4_RES: &[u8] = include_bytes!("VIDEO4.RES");
-const VIDEO_PATH: &str = "INTRO/05.smk";
+const VIDEO_PATH: &str = "M10/01.smk";
 
 fn main() {
     let cursor = Cursor::new(VIDEO4_RES);
@@ -15,6 +15,8 @@ fn main() {
             let mut cursor = Cursor::new(smk_file);
             if let Ok(player) = SmackerPlayer::load_from_stream(&mut cursor) {
                 let mut player = player;
+                player.set_fade_in_ms(800);
+                player.set_fade_out_ms(800);
                 let(w, h) = (player.frame_width, player.frame_height);
                 println!("width: {}, height: {}", w, h);
 
@@ -45,7 +47,18 @@ fn main() {
                         PlayerState::FinishedPlaying => {
                             break;
                         },
-                        PlayerState::RenderedNewFrame => {
+                        PlayerState::FadeIn(_) => {
+                            player.blit_picture(&mut buffer, 0, 0, w);
+                            window.update_with_buffer(&buffer, w, h).unwrap();
+                        }
+                        PlayerState::IsRendering {
+                            state: RenderingFramesState::RenderedNewFrame,
+                            ..
+                        } => {
+                            player.blit_picture(&mut buffer, 0, 0, w);
+                            window.update_with_buffer(&buffer, w, h).unwrap();
+                        }
+                        PlayerState::FadeOut(_) => {
                             player.blit_picture(&mut buffer, 0, 0, w);
                             window.update_with_buffer(&buffer, w, h).unwrap();
                         },
