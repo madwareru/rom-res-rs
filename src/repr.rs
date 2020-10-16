@@ -3,8 +3,9 @@ use std::{
     io::{Read, Seek}
 };
 use crate::enumerations::{
-    ResourceKind, ResourceData
+    ResourceKind
 };
+use std::ops::Range;
 
 pub(crate) struct ResourceHeader {
     pub(crate) offset: u32,
@@ -15,5 +16,5 @@ pub(crate) struct ResourceHeader {
 
 pub struct ResourceFile<T: Read+Seek> {
     pub(crate) stream: T,
-    pub(crate) file_lookup: HashMap<String, ResourceData>
+    pub(crate) file_lookup: HashMap<String, (Range<usize>, Option<Vec<u8>>)>
 }

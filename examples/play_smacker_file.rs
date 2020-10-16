@@ -25,6 +25,8 @@ fn main() {
                     (w * 4, h * 4)
                 } else if w < 700 {
                     (w * 2, h * 2)
+                } else if w <= 800 {
+                    ((w * 3) / 2, (h * 3) / 2)
                 } else {
                     (w, h)
                 };

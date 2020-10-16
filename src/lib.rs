@@ -11,6 +11,8 @@ use crate::repr::*;
 
 pub use crate::repr::ResourceFile;
 pub use crate::enumerations::RomResourceError;
+use std::ops::Range;
+use std::borrow::Borrow;
 
 impl<T: Read+Seek> ResourceFile<T> {
     fn seek_stream_from_current(stream: &mut T, offset: i64) -> Result<(), RomResourceError> {
@@ -111,12 +113,11 @@ impl<T: Read+Seek> ResourceFile<T> {
                     }
                 },
                 ResourceKind::File => {
+                    let offset = child_header.offset as usize;
+                    let size = child_header.size as usize;
                     file_lookup.insert(
                         name,
-                        ResourceData::ByteRange(
-                            child_header.offset as usize,
-                            child_header.size as usize
-                        )
+                        ( offset..offset+size, None )
                     );
                 }
             };
@@ -132,13 +133,15 @@ impl<T: Read+Seek> ResourceFile<T> {
         match self.file_lookup.get_mut(path) {
             None => Err(RomResourceError::NonExistentResource),
             Some(data_entry) => {
-                if let ResourceData::ByteRange(offset, size) = data_entry {
-                    Self::seek_stream_from_start(&mut self.stream, *offset)?;
-                    let mut vec = vec![0u8; *size];
+                if let None = data_entry.1 {
+                    let offset = data_entry.0.start;
+                    let size = data_entry.0.end - offset;
+                    Self::seek_stream_from_start(&mut self.stream, offset)?;
+                    let mut vec = vec![0u8; size];
                     if self.stream.read(&mut vec).is_err() {
                         return Err(RomResourceError::UnableToRead);
                     }
-                    *data_entry = ResourceData::Bytes(vec);
+                    data_entry.1 = Some(vec);
                 }
                 Ok(())
             }
@@ -148,8 +151,8 @@ impl<T: Read+Seek> ResourceFile<T> {
     pub fn get_resource_bytes(&mut self, path: &str) -> Result<&[u8], RomResourceError> {
         self.ensure_resource_bytes(path)?;
         match self.file_lookup.get(path) {
-            Some(ResourceData::Bytes(bytes)) => Ok(bytes),
-            _ => Err(RomResourceError::NonExistentResource)
+            Some((_, Some(bytes))) => Ok(bytes),
+            _ => unreachable!()
         }
     }
 
@@ -159,5 +162,13 @@ impl<T: Read+Seek> ResourceFile<T> {
             vec.push(key.clone());
         };
         vec
+    }
+
+    pub fn flush_cache(&mut self) {
+        for (_, (_, data)) in self.file_lookup.iter_mut() {
+            if data.is_some() {
+                *data = None;
+            }
+        };
     }
 }
