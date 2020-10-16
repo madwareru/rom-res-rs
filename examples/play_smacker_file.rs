@@ -1,5 +1,5 @@
 use rom_res_rs::*;
-use std::io::{Cursor, Write};
+use std::io::{Cursor};
 use minifb::{Window, WindowOptions, Key};
 use rom_media_rs::video::{SmackerPlayer, PlayerState, FadeInState, RenderingFramesState};
 use std::time::Instant;

@@ -11,8 +11,6 @@ use crate::repr::*;
 
 pub use crate::repr::ResourceFile;
 pub use crate::enumerations::RomResourceError;
-use std::ops::Range;
-use std::borrow::Borrow;
 
 impl<T: Read+Seek> ResourceFile<T> {
     fn seek_stream_from_current(stream: &mut T, offset: i64) -> Result<(), RomResourceError> {
