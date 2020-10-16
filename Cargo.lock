@@ -670,7 +670,7 @@ dependencies = [
 
 [[package]]
 name = "rom-res-rs"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "bin-serialization-rs 0.1.3 (git+https://github.com/madwareru/bin-serialization-rs)",
  "cp866-rs 0.1.2 (git+https://github.com/madwareru/cp866-rs)",
