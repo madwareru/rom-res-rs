@@ -11,7 +11,7 @@ fn main() {
         if let Ok(data_bin) = resource_file.get_resource_bytes("data/data.bin") {
             let mut cursor = Cursor::new(data_bin);
             let data_bin_content = DataBinContent::read(&mut cursor);
-            println!("data bin content:\n {:?}", data_bin_content);
+            println!("data bin content:\n {:#?}", data_bin_content);
         }
     }
 }
