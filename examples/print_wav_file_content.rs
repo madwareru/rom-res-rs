@@ -1,9 +1,8 @@
 use rom_res_rs::*;
 use std::io::Cursor;
 
-mod hex_print_utils;
-use hex_print_utils::*;
 use rom_loaders_rs::multimedia::WavContent;
+use print_hex_rs::print_hex;
 
 const SFX_RES: &[u8] = include_bytes!("SFX.RES");
 
@@ -22,7 +21,7 @@ fn main() {
             println!("sampling rate: {}", wav.fmt.sampling_rate);
             println!("bytes per sample: {}", wav.fmt.bytes_per_sample);
             println!("bits per sample: {}", wav.fmt.bits_per_sample);
-            println!("samples: {:?}", wav.data);
+            println!("samples: {:#?}", wav.data);
         }
     }
 }

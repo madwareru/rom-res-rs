@@ -159,6 +159,7 @@ impl<T: Read+Seek> ResourceFile<T> {
         for (key, _) in self.file_lookup.iter() {
             vec.push(key.clone());
         };
+        vec.sort();
         vec
     }
 

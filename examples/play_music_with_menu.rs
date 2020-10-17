@@ -24,21 +24,18 @@ async fn main() {
         let mut sfx_resource_file = sfx_resource_file;
         let mut speech_resource_file = speech_resource_file;
         let mut music_resources = music_resource_file.get_resource_list();
-        music_resources.sort();
         let mut sfx_resources = sfx_resource_file.get_resource_list();
         sfx_resources = sfx_resources
             .iter()
             .filter(|s| &s[s.len() - 4..] == ".wav")
             .map(|s| s.clone())
             .collect();
-        sfx_resources.sort();
         let mut speech_resources = speech_resource_file.get_resource_list();
         speech_resources = speech_resources
             .iter()
             .filter(|s| &s[s.len() - 4..] == ".wav")
             .map(|s| s.clone())
             .collect();
-        speech_resources.sort();
 
         let mut music_mixer = SoundMixer::new();
         let mut sfx_mixer = SoundMixer::new();

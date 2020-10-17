@@ -42,8 +42,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "bin-serialization-rs"
-version = "0.1.3"
-source = "git+https://github.com/madwareru/bin-serialization-rs#3674a77ea1e2c6c6e55a0a5fbc36588c494a8060"
+version = "0.1.4"
+source = "git+https://github.com/madwareru/bin-serialization-rs#604bc60c54f82ad94115c3e9c1199c94a7b44041"
 dependencies = [
  "cp866-rs 0.1.2 (git+https://github.com/madwareru/cp866-rs)",
 ]
@@ -440,6 +440,11 @@ version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "print-hex-rs"
+version = "0.1.0"
+source = "git+https://github.com/madwareru/print-hex-rs#57a50eac4f5445859afe0ef7de9b8ed71dcf06ad"
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -650,10 +655,10 @@ dependencies = [
 
 [[package]]
 name = "rom-loaders-rs"
-version = "0.3.2"
-source = "git+https://github.com/madwareru/rom-loaders-rs#030f315c8a508d906e0d364a04fa79e0ba4244e8"
+version = "0.3.6"
+source = "git+https://github.com/madwareru/rom-loaders-rs#f117562b73847693d7df4c4febd126c47cf9a40b"
 dependencies = [
- "bin-serialization-rs 0.1.3 (git+https://github.com/madwareru/bin-serialization-rs)",
+ "bin-serialization-rs 0.1.4 (git+https://github.com/madwareru/bin-serialization-rs)",
  "bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "cp866-rs 0.1.2 (git+https://github.com/madwareru/cp866-rs)",
  "regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -665,19 +670,20 @@ version = "0.3.4"
 source = "git+https://github.com/madwareru/rom-media-rs#77069600df1b838a02cc7f8c0944422c2753c64b"
 dependencies = [
  "cpal 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rom-loaders-rs 0.3.2 (git+https://github.com/madwareru/rom-loaders-rs)",
+ "rom-loaders-rs 0.3.6 (git+https://github.com/madwareru/rom-loaders-rs)",
 ]
 
 [[package]]
 name = "rom-res-rs"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
- "bin-serialization-rs 0.1.3 (git+https://github.com/madwareru/bin-serialization-rs)",
+ "bin-serialization-rs 0.1.4 (git+https://github.com/madwareru/bin-serialization-rs)",
  "cp866-rs 0.1.2 (git+https://github.com/madwareru/cp866-rs)",
  "macroquad 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "minifb 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "print-hex-rs 0.1.0 (git+https://github.com/madwareru/print-hex-rs)",
  "regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)",
- "rom-loaders-rs 0.3.2 (git+https://github.com/madwareru/rom-loaders-rs)",
+ "rom-loaders-rs 0.3.6 (git+https://github.com/madwareru/rom-loaders-rs)",
  "rom-media-rs 0.3.4 (git+https://github.com/madwareru/rom-media-rs)",
 ]
 
@@ -999,7 +1005,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum approx 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "f0e60b75072ecd4168020818c0107f2857bb6c4e64252d8d3983f6263b40a5c3"
 "checksum autocfg 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "1d49d90015b3c36167a20fe2810c5cd875ad504b39cff3d4eae7977e6b7c1cb2"
 "checksum autocfg 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
-"checksum bin-serialization-rs 0.1.3 (git+https://github.com/madwareru/bin-serialization-rs)" = "<none>"
+"checksum bin-serialization-rs 0.1.4 (git+https://github.com/madwareru/bin-serialization-rs)" = "<none>"
 "checksum bindgen 0.53.3 (registry+https://github.com/rust-lang/crates.io-index)" = "c72a978d268b1d70b0e963217e60fdabd9523a941457a6c42a7315d15c7e89e5"
 "checksum bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 "checksum byteorder 1.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
@@ -1048,6 +1054,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum pkg-config 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)" = "d36492546b6af1463394d46f0c834346f31548646f6ba10849802c9c9a27ac33"
 "checksum png 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ef859a23054bbfee7811284275ae522f0434a3c8e7f4b74bd4a35ae7e1c4a283"
 "checksum ppv-lite86 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)" = "c36fa947111f5c62a733b652544dd0016a43ce89619538a8ef92724a6f501a20"
+"checksum print-hex-rs 0.1.0 (git+https://github.com/madwareru/print-hex-rs)" = "<none>"
 "checksum proc-macro2 1.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "51ef7cd2518ead700af67bf9d1a658d90b6037d77110fd9c0445429d0ba1c6c9"
 "checksum quad-gl 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a6a9c34f7e344c68903c30f92fda630a881f88ab5d7b8fd64a6b794ee62ffbf5"
 "checksum quad-rand 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ec3e8eb9b1d9b58a43bac8f20985768ddcc03b928a909d4d39ced327b971fec5"
@@ -1072,7 +1079,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)" = "9c3780fcf44b193bc4d09f36d2a3c87b251da4a046c87795a0d35f4f927ad8e6"
 "checksum regex-syntax 0.6.18 (registry+https://github.com/rust-lang/crates.io-index)" = "26412eb97c6b088a6997e05f69403a802a92d520de2f8e63c2b65f9e0f47c4e8"
 "checksum remove_dir_all 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3acd125665422973a33ac9d3dd2df85edad0f4ae9b00dafb1a05e43a9f5ef8e7"
-"checksum rom-loaders-rs 0.3.2 (git+https://github.com/madwareru/rom-loaders-rs)" = "<none>"
+"checksum rom-loaders-rs 0.3.6 (git+https://github.com/madwareru/rom-loaders-rs)" = "<none>"
 "checksum rom-media-rs 0.3.4 (git+https://github.com/madwareru/rom-media-rs)" = "<none>"
 "checksum rustc-hash 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 "checksum rusttype 0.7.9 (registry+https://github.com/rust-lang/crates.io-index)" = "310942406a39981bed7e12b09182a221a29e0990f3e7e0c971f131922ed135d5"

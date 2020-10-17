@@ -1,11 +1,11 @@
 use rom_res_rs::*;
 use std::io::{Cursor};
 use minifb::{Window, WindowOptions, Key};
-use rom_media_rs::video::{SmackerPlayer, PlayerState, FadeInState, RenderingFramesState};
+use rom_media_rs::video::{SmackerPlayer, PlayerState, RenderingFramesState};
 use std::time::Instant;
 
 const VIDEO4_RES: &[u8] = include_bytes!("VIDEO4.RES");
-const VIDEO_PATH: &str = "M10/01.smk";
+const VIDEO_PATH: &str = "INTRO/04.smk";
 
 fn main() {
     let cursor = Cursor::new(VIDEO4_RES);
