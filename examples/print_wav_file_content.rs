@@ -10,10 +10,10 @@ fn main() {
     let cursor = Cursor::new(SFX_RES);
     if let Ok(resource_file) = ResourceFile::new(cursor) {
         let mut resource_file = resource_file;
-        if let Ok(data_bin) = resource_file.get_resource_bytes("monsters/orc/dead.wav"){
-            print_hex(data_bin);
+        if let Ok(wav_file) = resource_file.get_resource_bytes("monsters/orc/dead.wav"){
+            print_hex(wav_file);
 
-            let mut cursor = Cursor::new(data_bin);
+            let mut cursor = Cursor::new(wav_file);
             let wav = WavContent::read(&mut cursor).unwrap();
             println!("channels: {}", wav.fmt.channels);
             println!("format: {}", wav.fmt.format);
