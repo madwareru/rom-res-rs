@@ -1,7 +1,5 @@
 use print_hex_rs::print_hex;
 use rom_loaders_rs::regfile::Registry;
-use std::io::Cursor;
-use rom_res_rs::ResourceFile;
 
 const SAVE_FILE: &[u8] = include_bytes!("game9999.sav");
 

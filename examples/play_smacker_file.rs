@@ -3,6 +3,7 @@ use std::io::{Cursor};
 use rom_media_rs::video::{SmackerPlayer, PlayerState, RenderingFramesState};
 use std::time::{Instant, Duration};
 use rom_media_rs::windowing::{PixelWindowHandler, PixelWindowControlFlow, start_opengl_window, WindowParameters, Key};
+use rom_media_rs::image_rendering::blittable::BlitBuilder;
 
 const VIDEO4_RES: &[u8] = include_bytes!("VIDEO4.RES");
 const VIDEO_PATH: &str = "INTRO/04.smk";
@@ -59,7 +60,9 @@ impl PixelWindowHandler for SmackerPlayerWindow {
 
     fn render(&mut self, buffer: &mut [u32], w: u16, _h: u16) {
         if self.frame_dirty {
-            self.player.blit_picture(buffer, 0, 30, w as usize);
+            BlitBuilder::new(buffer, w as usize, &self.player)
+                .with_dest_pos(0, 30)
+                .blit();
             self.frame_dirty = false;
         }
     }
@@ -104,7 +107,7 @@ fn main() {
                 start_opengl_window(smacker_window, WindowParameters{
                     window_width: 320,
                     window_height: 240,
-                    fullscreen: true,
+                    fullscreen: false,
                     scale_up: 2
                 })
             }

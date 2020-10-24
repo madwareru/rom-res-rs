@@ -23,7 +23,7 @@ async fn main() {
         let mut music_resource_file = music_resource_file;
         let mut sfx_resource_file = sfx_resource_file;
         let mut speech_resource_file = speech_resource_file;
-        let mut music_resources = music_resource_file.get_resource_list();
+        let music_resources = music_resource_file.get_resource_list();
         let mut sfx_resources = sfx_resource_file.get_resource_list();
         sfx_resources = sfx_resources
             .iter()
