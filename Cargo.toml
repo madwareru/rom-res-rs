@@ -12,6 +12,6 @@ bin-serialization-rs = { git = "https://github.com/madwareru/bin-serialization-r
 
 [dev-dependencies]
 print-hex-rs = { git = "https://github.com/madwareru/print-hex-rs", version = "0.1.0" }
-rom-media-rs = { git = "https://github.com/madwareru/rom-media-rs", version = "0.4.13" }
+rom-media-rs = { git = "https://github.com/madwareru/rom-media-rs", version = "0.6.1" }
 rom-loaders-rs = { git = "https://github.com/madwareru/rom-loaders-rs", version = "0.4.15"}
 macroquad = "0.2.0-alpha.0"

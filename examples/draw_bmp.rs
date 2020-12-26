@@ -1,19 +1,43 @@
 use rom_res_rs::*;
 use std::io::Cursor;
 use rom_loaders_rs::images::sprite::BmpSprite;
-use rom_media_rs::windowing::{PixelWindowHandler, Key, PixelWindowControlFlow, start_opengl_window, WindowParameters};
+use rom_media_rs::windowing::{PixelWindowHandler, Key, PixelWindowControlFlow, start_pixel_window, WindowParameters};
 use std::time::Duration;
 use rom_media_rs::image_rendering::blittable::BlitBuilder;
+use rom_media_rs::graphics::PixelSurface;
 
 const MAIN_RES: &[u8] = include_bytes!("MAIN.RES");
 
 struct SpriteRenderingWindow {
     sprite: BmpSprite,
-    early_exit: bool
+    early_exit: bool,
+    surface: PixelSurface
 }
 impl PixelWindowHandler for SpriteRenderingWindow {
-    const TITLE: &'static str = "Bmp rendering";
     const FRAME_INTERVAL: Duration = Duration::from_micros(16667);
+
+    fn create(window_params: &WindowParameters) -> Self {
+        let cursor = Cursor::new(MAIN_RES);
+        let mut resource_file = ResourceFile::new(cursor)
+            .expect(&format!("failed to open VIDEO4.RES"));
+
+        let menu_resource = resource_file.get_resource_bytes("graphics/mainmenu/menu_.bmp")
+            .expect(&format!("failed to load resource {}", "graphics/mainmenu/menu_.bmp"));
+
+        let sprite = BmpSprite::read_from(&mut Cursor::new(menu_resource))
+            .expect(&format!("failed to load resource bmp content"));
+
+        let surface = PixelSurface::create(
+            window_params.window_width,
+            window_params.window_height
+        );
+
+        Self {
+            sprite,
+            early_exit: false,
+            surface
+        }
+    }
 
     fn update(&mut self) -> PixelWindowControlFlow {
         if self.early_exit {
@@ -23,9 +47,15 @@ impl PixelWindowHandler for SpriteRenderingWindow {
         }
     }
 
-    fn render(&mut self, buffer: &mut [u32], w: u16, _h: u16) {
-        BlitBuilder::new(buffer, w as usize, &self.sprite)
-            .blit()
+    fn prerender(&mut self) {
+        let buffer = &mut self.surface.bytes;
+        let w = self.surface.width as usize;
+        BlitBuilder::new(buffer, w as usize, &self.sprite).blit();
+        self.surface.actualize_buffer()
+    }
+
+    fn render(&mut self) {
+        self.surface.draw(0.0, 0.0, 1.0, 1.0)
     }
 
     fn on_key_pressed(&mut self, key: Key) {
@@ -42,30 +72,29 @@ impl PixelWindowHandler for SpriteRenderingWindow {
 
     }
 
-    fn on_mouse_button_pressed(&mut self, _button_id: u8) {
+    fn on_mouse_button_pressed(&mut self, _button_id: u16) {
 
     }
 
-    fn on_mouse_button_released(&mut self, _button_id: u8) {
+    fn on_mouse_button_released(&mut self, _button_id: u16) {
 
+    }
+
+    fn on_window_closed(&mut self) {
+
+    }
+
+    fn cleanup(&mut self) {
+        self.surface.cleanup()
     }
 }
 
 fn main() {
-    let cursor = Cursor::new(MAIN_RES);
-    if let Ok(resource_file) = ResourceFile::new(cursor) {
-        let mut resource_file = resource_file;
-        if let Ok(bmp_file) = resource_file.get_resource_bytes("graphics/mainmenu/menu_.bmp"){
-            let bmp_sprite = BmpSprite::read_from(&mut Cursor::new(bmp_file));
-            if let Ok(sprite) = bmp_sprite {
-                let window = SpriteRenderingWindow { sprite, early_exit: false };
-                start_opengl_window(window, WindowParameters {
-                    window_width: 640,
-                    window_height: 480,
-                    scale_up: 1,
-                    fullscreen: false
-                })
-            }
-        }
-    }
+    start_pixel_window::<SpriteRenderingWindow>(WindowParameters {
+        title: "Bmp rendering",
+        window_width: 640,
+        window_height: 480,
+        scale_up: 1,
+        fullscreen: false
+    })
 }
