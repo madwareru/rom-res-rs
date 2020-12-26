@@ -120,10 +120,6 @@ impl PixelWindowHandler for SmackerPlayerWindow {
     fn on_window_closed(&mut self) {
 
     }
-
-    fn cleanup(&mut self) {
-        self.surface.cleanup();
-    }
 }
 
 fn main() {
@@ -132,6 +128,7 @@ fn main() {
         window_width: 320,
         window_height: 240,
         fullscreen: false,
-        scale_up: 2
+        scale_up: 2,
+        cursor_visible: false
     })
 }

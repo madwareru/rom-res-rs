@@ -83,10 +83,6 @@ impl PixelWindowHandler for SpriteRenderingWindow {
     fn on_window_closed(&mut self) {
 
     }
-
-    fn cleanup(&mut self) {
-        self.surface.cleanup()
-    }
 }
 
 fn main() {
@@ -94,7 +90,6 @@ fn main() {
         title: "Bmp rendering",
         window_width: 640,
         window_height: 480,
-        scale_up: 1,
-        fullscreen: false
+        ..Default::default()
     })
 }
