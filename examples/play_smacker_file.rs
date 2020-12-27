@@ -81,13 +81,12 @@ impl PixelWindowHandler for SmackerPlayerWindow {
 
     fn prerender(&mut self) {
         if self.frame_dirty {
-            let buffer = &mut self.surface.bytes;
-            let w = self.surface.width as usize;
-            BlitBuilder::new(buffer, w as usize, &self.player)
+            let buffer = &mut self.surface.borrow_buffer();
+            let w = buffer.width();
+            BlitBuilder::new(buffer, w, &self.player)
                 .with_dest_pos(0, 30)
                 .blit();
             self.frame_dirty = false;
-            self.surface.actualize_buffer();
         }
     }
 

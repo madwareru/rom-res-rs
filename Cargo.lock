@@ -1076,8 +1076,8 @@ dependencies = [
 
 [[package]]
 name = "rom-media-rs"
-version = "0.6.2"
-source = "git+https://github.com/madwareru/rom-media-rs#555e7caaee5d146b2f59086bc2242220444c603d"
+version = "0.6.3"
+source = "git+https://github.com/madwareru/rom-media-rs#68c39ba43f3de3473aa663a19e612909ac41d271"
 dependencies = [
  "bumpalo 3.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cpal 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1095,7 +1095,7 @@ dependencies = [
  "macroquad 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "print-hex-rs 0.1.0 (git+https://github.com/madwareru/print-hex-rs)",
  "rom-loaders-rs 0.4.15 (git+https://github.com/madwareru/rom-loaders-rs)",
- "rom-media-rs 0.6.2 (git+https://github.com/madwareru/rom-media-rs)",
+ "rom-media-rs 0.6.3 (git+https://github.com/madwareru/rom-media-rs)",
 ]
 
 [[package]]
@@ -1639,7 +1639,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum regex 1.3.9 (registry+https://github.com/rust-lang/crates.io-index)" = "9c3780fcf44b193bc4d09f36d2a3c87b251da4a046c87795a0d35f4f927ad8e6"
 "checksum regex-syntax 0.6.18 (registry+https://github.com/rust-lang/crates.io-index)" = "26412eb97c6b088a6997e05f69403a802a92d520de2f8e63c2b65f9e0f47c4e8"
 "checksum rom-loaders-rs 0.4.15 (git+https://github.com/madwareru/rom-loaders-rs)" = "<none>"
-"checksum rom-media-rs 0.6.2 (git+https://github.com/madwareru/rom-media-rs)" = "<none>"
+"checksum rom-media-rs 0.6.3 (git+https://github.com/madwareru/rom-media-rs)" = "<none>"
 "checksum rustc-hash 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 "checksum rusttype 0.7.9 (registry+https://github.com/rust-lang/crates.io-index)" = "310942406a39981bed7e12b09182a221a29e0990f3e7e0c971f131922ed135d5"
 "checksum rusttype 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)" = "9f61411055101f7b60ecf1041d87fb74205fb20b0c7a723f07ef39174cf6b4c0"
