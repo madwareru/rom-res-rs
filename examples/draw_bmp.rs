@@ -50,7 +50,7 @@ impl PixelWindowHandler for SpriteRenderingWindow {
     fn prerender(&mut self) {
         let buffer = &mut self.surface.get_buffer_mut();
         let w = buffer.width();
-        BlitBuilder::new(buffer, w as usize, &self.sprite).blit();
+        BlitBuilder::create(buffer, w as usize, &self.sprite).blit();
     }
 
     fn render(&mut self) {

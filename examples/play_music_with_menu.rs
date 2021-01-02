@@ -1,4 +1,7 @@
-use macroquad::{clear_background, draw_window, megaui::{widgets, Vector2}, Vec2, WHITE, WindowParams};
+use macroquad::prelude::*;
+use megaui_macroquad::*;
+use megaui_macroquad::megaui::*;
+use megaui_macroquad::megaui::widgets::*;
 
 use std::io::Cursor;
 use rom_res_rs::ResourceFile;
@@ -9,7 +12,17 @@ const MUSIC_RES: &[u8] = include_bytes!("MUSIC.RES");
 const SFX_RES: &[u8] = include_bytes!("SFX.RES");
 const SPEECH_RES: &[u8] = include_bytes!("SPEECH.RES");
 
-#[macroquad::main("Play ROM sounds")]
+fn window_conf() -> Conf {
+    Conf {
+        window_title: "Window Conf".to_owned(),
+        fullscreen: false,
+        window_width: 1024,
+        window_height: 768,
+        ..Default::default()
+    }
+}
+
+#[macroquad::main(window_conf)]
 async fn main() {
     if let (
         Ok(music_resource_file),
@@ -53,7 +66,7 @@ async fn main() {
                 |ui| {
                     let mut y_pos = 20.0;
                     for i in 0..music_resources.len() {
-                        if widgets::Button::new(&music_resources[i])
+                        if Button::new(&music_resources[i])
                             .position(Vector2::new(5., y_pos))
                             .size(Vector2::new(200., 17.))
                             .ui(ui)
@@ -145,7 +158,9 @@ async fn main() {
             music_mixer.frame();
             sfx_mixer.frame();
 
-            macroquad::next_frame().await;
+            draw_megaui();
+
+            next_frame().await;
         }
     }
 }

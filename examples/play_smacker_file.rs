@@ -83,7 +83,7 @@ impl PixelWindowHandler for SmackerPlayerWindow {
         if self.frame_dirty {
             let buffer = &mut self.surface.get_buffer_mut();
             let w = buffer.width();
-            BlitBuilder::new(buffer, w, &self.player)
+            BlitBuilder::create(buffer, w, &self.player)
                 .with_dest_pos(0, 30)
                 .blit();
             self.frame_dirty = false;
@@ -126,7 +126,7 @@ fn main() {
         title: "Smacker playback",
         window_width: 320,
         window_height: 240,
-        fullscreen: false,
+        fullscreen: true,
         scale_up: 2,
         cursor_visible: false
     })
