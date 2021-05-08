@@ -1,6 +1,6 @@
 [package]
 name = "rom-res-rs"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["madwareru <madware.ru@gmail.com>"]
 edition = "2018"
 
@@ -11,9 +11,11 @@ cp866-rs = { git = "https://github.com/madwareru/cp866-rs", version = "0.1.2"}
 bin-serialization-rs = { git = "https://github.com/madwareru/bin-serialization-rs", version = "0.1"}
 
 [dev-dependencies]
+png = "0.16.8"
 print-hex-rs = { git = "https://github.com/madwareru/print-hex-rs", version = "0.1.0" }
-rom-media-rs = { git = "https://github.com/madwareru/rom-media-rs", version = "0.6.9" }
-rom-loaders-rs = { git = "https://github.com/madwareru/rom-loaders-rs", version = "0.4.15"}
+rom-media-rs = { git = "https://github.com/madwareru/rom-media-rs", version = "0.6.17" }
+rom-loaders-rs = { git = "https://github.com/madwareru/rom-loaders-rs", version = "0.4.25"}
+miniquad = "0.3.0-alpha.30"
 macroquad = "0.3.0-alpha.14"
 megaui-macroquad = "0.1.1"
 golem = "0.1.7"
