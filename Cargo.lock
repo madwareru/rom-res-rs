@@ -15,7 +15,7 @@ source = "git+https://github.com/madwareru/cp866-rs#7a3aeb3116640807bca56c3619c0
 
 [[package]]
 name = "rom-res-rs"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "bin-serialization-rs",
  "cp866-rs",
