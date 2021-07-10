@@ -1,2 +1,4 @@
 /target
 /basic-examples/target/
+*.RES
+*.sav
