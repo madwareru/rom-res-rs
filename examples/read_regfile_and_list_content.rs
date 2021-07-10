@@ -3,9 +3,8 @@ use std::io::Cursor;
 
 use rom_loaders_rs::regfile::Registry;
 
-const SCENARIO_RES: &[u8] = include_bytes!("SCENARIO.RES");
-const SCENARIO_REG_NAME: &str = "scenario.reg";
-const NPC_REG_NAME: &str = "npc.reg";
+const GRAPHICS_RES: &[u8] = include_bytes!("GRAPHICS.RES");
+const PROJECTILE_REG_NAME: &str = "projectiles/projectiles.reg";
 
 fn print_registry_info_from_res(file: &mut ResourceFile<Cursor<&[u8]>>, reg_name: &str) {
     if let Ok(reg_file) = file.get_resource_bytes(reg_name) {
@@ -40,10 +39,9 @@ fn print_registry_info_from_res(file: &mut ResourceFile<Cursor<&[u8]>>, reg_name
 }
 
 fn main() {
-    let cursor = Cursor::new(SCENARIO_RES);
+    let cursor = Cursor::new(GRAPHICS_RES);
     if let Ok(resource_file) = ResourceFile::new(cursor) {
         let mut resource_file = resource_file;
-        print_registry_info_from_res(&mut resource_file, SCENARIO_REG_NAME);
-        print_registry_info_from_res(&mut resource_file, NPC_REG_NAME);
+        print_registry_info_from_res(&mut resource_file, PROJECTILE_REG_NAME);
     }
 }
